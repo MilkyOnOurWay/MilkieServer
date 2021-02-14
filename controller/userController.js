@@ -62,7 +62,7 @@ module.exports = {
     const { newNickName } = req.body;
     const userIdx = req.userIdx;
     
-    if(!newNickName) {
+    if (!newNickName) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
@@ -77,5 +77,31 @@ module.exports = {
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
     return;
+  },
+  deleteUser: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      const findUser = await user.findOne({
+        where: {
+          id
+        }
+      });
+
+      if (!user) {
+        res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_USER));
+        return;
+      }
+
+      const userDelete = await user.destroy({
+        where: {
+          id
+        }
+      });
+
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_DELETE_SUCCESS));
+    } catch (err) {
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+    }
   }
 }

@@ -13,6 +13,9 @@ module.exports = {
   // 닉네임 변경
   NICKNAME_UPDATE_SUCCESS: "닉네임 변경 성공입니다.",
 
+  // 회원 탈퇴
+  USER_DELETE_SUCCESS: "회원 탈퇴 성공입니다.",
+
   // 유저 첫 번째 탭 조회
   USER_HOME_SUCCESS: "홈 조회 성공입니다.",
   NOT_SEARCH_CAFE: "해당 카테고리의 카페가 없습니다.",
