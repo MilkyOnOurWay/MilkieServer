@@ -1,10 +1,34 @@
 const jwt = require("jsonwebtoken");
-const secretKey = require("../config/secretKey").secretKey;
-const options = require("../config/secretKey").options;
-const refreshOptions = require("../config/secretKey").refreshOptions;
 const { user } = require("../models");
 const TOKEN_EXPIRED = -3;
 const TOKEN_INVALID = -2;
+
+if (!process.env.JWT_SECRET) {
+  console.error('Please check jwt secret env', process.env)
+  process.exit(1);
+}
+
+if (!process.env.ACCESS_TOKEN_ALGORITHM || !process.env.ACCESS_TOKEN_EXPIRY || !process.env.ACCESS_TOKEN_ISSUER) {
+  console.error('Please check access token options env', process.env);
+  process.exit(1);
+}
+
+if (!process.env.REFRESH_TOKEN_ALGORITHM || !process.env.REFRESH_TOKEN_EXPIRY || !process.env.REFRESH_TOKEN_ISSUER) {
+  console.error('Please check refresh token options env', process.env);
+  process.exit(1);
+}
+
+const secretKey = process.env.JWT_SECRET;
+const options = {
+  algorithm: process.env.ACCESS_TOKEN_ALGORITHM,
+  expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+  issuer: process.env.ACCESS_TOKEN_ISSUER,
+};
+const refreshOptions = {
+  algorithm: process.env.REFRESH_TOKEN_ALGORITHM,
+  expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+  issuer: process.env.REFRESH_TOKEN_ISSUER,
+}
 
 module.exports = {
   sign: async (idx) => {
