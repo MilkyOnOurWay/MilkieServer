@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    restart: always
+    ports: 
+      - 80:3000
+    environment: 
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=test
+      - DATABASE_NAME=milkyway
+      - DATABASE_HOST=database
+      - DATABASE_DIALECT=mysql
+      - JWT_SECRET=jWtSeCeReT
+      - ACCESS_TOKEN_ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRY=30d
+      - ACCESS_TOKEN_ISSUER=milkyWay
+      - REFRESH_TOKEN_ALGORITHM=HS256
+      - REFRESH_TOKEN_EXPIRY=30d
+      - REFRESH_TOKEN_ISSUER=milkyWay
+  database:
+    image: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment: 
+      - MYSQL_DATABASE=milkyway
+      - MYSQL_ROOT_PASSWORD=test
