@@ -36,6 +36,10 @@ module.exports = {
     const userId = req.userIdx;
     const query  = req.query.query;
     const { KAKAO_KEY } = process.env;
+    if (!KAKAO_KEY) {
+      console.error('Please check kakao key env', process.env);
+      process.exit(1);
+    }
 
     try {
       const kakaoOptions = {

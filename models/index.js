@@ -1,14 +1,19 @@
 const Sequelize = require('sequelize');
-const env = process.env.NODE_ENV || 'development';
-const config = require('../config/config.json')[env];
 const db = {};
-
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+const { DATABASE_NAME, DATABASE_PASSWORD, DATABASE_USER, DATABASE_HOST, DATABASE_DIALECT } = process.env;
+if (!DATABASE_NAME || !DATABASE_PASSWORD || !DATABASE_USER || !DATABASE_HOST || !DATABASE_DIALECT) {
+  console.error('Please check database env', process.env);
+  process.exit(1);
 }
+
+const database = DATABASE_NAME;
+const username = DATABASE_USER;
+const password = DATABASE_PASSWORD;
+const host = DATABASE_HOST;
+const dialect = DATABASE_DIALECT;
+
+const sequelize = new Sequelize(database, username, password, { host, dialect })
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
