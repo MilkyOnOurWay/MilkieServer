@@ -18,6 +18,7 @@ services:
       - REFRESH_TOKEN_ALGORITHM=HS256
       - REFRESH_TOKEN_EXPIRY=30d
       - REFRESH_TOKEN_ISSUER=milkyWay
+      - KAKAO_KEY=kakao_key
   database:
     image: mysql
     restart: always
