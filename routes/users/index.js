@@ -7,4 +7,5 @@ router.post('/signup', userController.signup);
 router.post('/signin', userController.signin);
 router.put('/nickName', jwtMiddlewares.userJwt, userController.nickNameChange);
 router.delete('/userDelete', jwtMiddlewares.userJwt, userController.deleteUser);
+
 module.exports = router;
