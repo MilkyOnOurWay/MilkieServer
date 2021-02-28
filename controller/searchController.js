@@ -33,7 +33,6 @@ module.exports = {
     }
   },
   searchCafeByKakaoAPI: async (req, res) => {
-    const userId = req.userIdx;
     const query  = req.query.query;
     const { KAKAO_KEY } = process.env;
     if (!KAKAO_KEY) {
@@ -45,22 +44,12 @@ module.exports = {
       const kakaoOptions = {
         url: 'https://dapi.kakao.com/v2/local/search/keyword.json',  
         method: 'GET',
-        headers: {
-          'Authorization': `KakaoAK ${KAKAO_KEY}`
-        },
-        qs: {
-          query : query 
-        },
+        headers: { 'Authorization': `KakaoAK ${KAKAO_KEY}` },
+        qs: { query },
         encoding: 'UTF-8',
       }
   
-      const result = await request(kakaoOptions)
-                        .then(function(response) {
-                          return JSON.parse(response).documents;
-                        })
-                        .catch(function (err) {
-                          return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
-                      });
+      const result = await request(kakaoOptions).then(response =>  JSON.parse(response).documents);
       const cafes = [];
       const allCafeIdTemp = await cafeService.readAllCafeId();
       const allCafeId = [];
