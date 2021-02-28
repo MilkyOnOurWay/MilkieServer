@@ -79,12 +79,12 @@ module.exports = {
     return;
   },
   deleteUser: async (req, res) => {
-    const { id } = req.params;
+    const userIdx = req.userIdx;
 
     try {
       const findUser = await user.findOne({
         where: {
-          id
+          id: userIdx
         }
       });
 
@@ -95,7 +95,7 @@ module.exports = {
 
       const userDelete = await user.destroy({
         where: {
-          id
+          id: userIdx
         }
       });
 
