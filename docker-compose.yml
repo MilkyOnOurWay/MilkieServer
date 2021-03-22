@@ -9,7 +9,7 @@ services:
       - DATABASE_USER=root
       - DATABASE_PASSWORD=test
       - DATABASE_NAME=milkyway
-      - DATABASE_HOST=database
+      - DATABASE_HOST=terraform-20210221025150437200000001.cy8mfrkhzl86.ap-northeast-2.rds.amazonaws.com
       - DATABASE_DIALECT=mysql
       - JWT_SECRET=jWtSeCeReT
       - ACCESS_TOKEN_ALGORITHM=HS256
