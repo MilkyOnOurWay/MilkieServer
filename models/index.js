@@ -13,6 +13,7 @@ const host = DATABASE_HOST;
 const dialect = DATABASE_DIALECT;
 
 const sequelize = new Sequelize(database, username, password, { host, dialect })
+if (!sequelize) process.exit(1);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
