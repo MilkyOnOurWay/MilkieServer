@@ -69,5 +69,40 @@ module.exports = {
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
     }
+  },
+  registerMenu: async (req, res) => {
+    const userId = req.userIdx;
+    const { cafeId } = req.params;
+    const { menu } = req.body;
+
+    if (!userId || !menu) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    }
+
+    if (!cafeId) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
+    }
+
+    // try {
+      const existingMenu = await cafeService.readCafeMenu(cafeId);
+      if (existingMenu) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_REGISTERED_MENU));
+      }
+
+      /** menu 등록 */
+      const registerCafeMenu = new Object();
+      for (let i = 0; i < menu.length; i++) {
+        const registerCafeMenuTemp = await adminService.registerCafeMenu(cafeId, menu[i].menuName, menu[i].price);
+        registerCafeMenu[registerCafeMenuTemp] = [];
+        for (let j = 0; j < menu[i].category.length; j++){
+          const registerMenuCategoryTemp = await adminService.registerMenuCategory(registerCafeMenuTemp.dataValues.menuId, menu[i].category[j]);
+          registerCafeMenu[registerCafeMenuTemp].push(registerMenuCategoryTemp);
+        }
+      }
+
+      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.REGISTER_MENU_SUCCESS, registerCafeMenu));
+    // } catch (error) {
+    //   return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+    // }
   }
 }
