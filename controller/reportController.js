@@ -25,9 +25,9 @@ module.exports = {
       }
 
       const result = await reportService.registerDeleteCafe(reason, userId, cafeId);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.REGISTER_DELETE_REQUEST_SUCCESS));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_DELETE_REQUEST_SUCCESS));
     } catch (error) {
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
   editCafe: async (req, res) => {
@@ -51,9 +51,9 @@ module.exports = {
       }
 
       const result = await reportService.registerEditCafe(reason, userId, cafeId);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.REGISTER_EDIT_REQUEST_SUCCESS));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_EDIT_REQUEST_SUCCESS));
     } catch (error) {
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
   readReports: async (req, res) => {
@@ -93,9 +93,9 @@ module.exports = {
         reports['done'] = confirmedReports
       }
     
-      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.READ_REPORTS_SUCCESS, reports));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_REPORTS_SUCCESS, reports));
     } catch (error) {
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
   confirmAndDeleteCafe: async (req, res) => {
@@ -123,9 +123,9 @@ module.exports = {
       }
 
       const result = await cafeService.deleteCafe(cafeId);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.DELETE_CAFE_SUCCESS));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.DELETE_CAFE_SUCCESS));
     } catch (error) {
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }, 
   addCafe: async (req, res) => {
@@ -156,9 +156,9 @@ module.exports = {
 
       /** addManage에 등록 */
       const result = await reportService.registerAddCafe(userId, registerAddCafeId);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.REGISTER_ADD_CAFE_SUCCESS));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_CAFE_SUCCESS));
     } catch (error) {
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
   addMenu: async (req, res) => {
@@ -166,22 +166,22 @@ module.exports = {
     const { cafeId } = req.params;
     const { menu } = req.body;
 
-    if (!userId || !menu) {
-      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
-    }
-
-    if (!cafeId) {
-      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
-    }
-
     try {
+      if (!userId || !menu) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      }
+  
+      if (!cafeId) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
+      }
+
       const existingMenu = await cafeService.readCafeMenu(cafeId);
       if (existingMenu) {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_REGISTERED_MENU));
       }
 
       /** menu 등록 */
-      const registerCafeMenu = new Object();
+      var registerCafeMenu = {};
       for (let i = 0; i < menu.length; i++) {
         const registerCafeMenuTemp = await adminService.registerCafeMenu(cafeId, menu[i].menuName, menu[i].price);
         registerCafeMenu[registerCafeMenuTemp] = [];
@@ -193,9 +193,9 @@ module.exports = {
 
       /** addManage에 등록 */
       const result = await reportService.registerAddMenu(userId);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.REGISTER_MENU_SUCCESS));
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_MENU_SUCCESS));
     } catch (error) {
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }
 }

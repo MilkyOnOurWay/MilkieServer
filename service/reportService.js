@@ -139,7 +139,6 @@ module.exports = {
       const progressStatus = 2;
       const now = new Date();
       const result = addManage.create({
-        // created_at: Sequelize.NOW,
         userId,
         cafeId,
         confirmStatus: progressStatus,
@@ -155,7 +154,6 @@ module.exports = {
       const progressStatus = 2;
       const now = new Date();
       const result = addManage.create({
-        // created_at: Sequelize.NOW,
         userId,
         confirmStatus: progressStatus,
         created_at: now.toUTCString()
