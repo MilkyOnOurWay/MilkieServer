@@ -19,5 +19,8 @@
     "request-promise": "^4.2.6",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.24.0"
   }
 }

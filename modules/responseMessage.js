@@ -73,5 +73,7 @@ module.exports = {
   CANCEL_REPORT_FAIL: "이미 취소된 카페 제보입니다",
   CANCEL_REPORT_SUCCESS: "카페 제보 취소 성공입니다",
   REGISTER_CAFE_SUCCESS: "카페 등록하기 성공입니다",
-  ALREADY_REGISTERED_CAFE: "이미 등록된 카페입니다"
+  REGISTER_MENU_SUCCESS: "메뉴 등록하기 성공입니다",
+  ALREADY_REGISTERED_CAFE: "이미 등록된 카페입니다",
+  ALREADY_REGISTERED_MENU: "이미 등록된 메뉴입니다"
 }
