@@ -13,11 +13,8 @@ sequelize.sync({ alter: false })
   console.error(error);
 })
 
-Http2ServerRequest.get('http://database')
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const { Http2ServerRequest } = require('http2');
 
 var app = express();
 
