@@ -9,6 +9,15 @@ module.exports = {
   signup: async (req, res) => {
     const { uuid, nickName } = req.body;
 
+    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%;'`);
+
+    const searchUuid = searchUuidResult[0];
+
+    if (searchUuid.uuid) {
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, searchUuid));
+      return;
+    }
+
     if (!nickName) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
@@ -24,36 +33,7 @@ module.exports = {
 
     const { accessToken, refreshToken } = await jwt.sign(id);
     
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGNUP_SUCCESS, {
-      accessToken: accessToken,
-      refreshToken: refreshToken
-    }))
-  },
-  signin: async (req, res) => {
-    const { uuid, nickName } = req.body;
-
-    if (!nickName) {
-      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
-      return;
-    }
-
-    const nickNameCheck = await user.findOne({
-      where: {
-        uuid: uuid,
-        nickName: nickName
-      }
-    });
-
-    if (!nickNameCheck) {
-      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_USER))
-      return;
-    }
-
-    const { id } = nickNameCheck;
-
-    const { accessToken, refreshToken } = await jwt.sign(id);
-    
-    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, {
+    res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.SIGNUP_SUCCESS, {
       accessToken: accessToken,
       refreshToken: refreshToken
     }))
