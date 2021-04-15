@@ -16,23 +16,6 @@ module.exports = {
   },
   readCafeInfo: async (userId, cafeId) => {
     try {
-      // const result = await sequelize.query(`
-      // SELECT CAFE.id, CAFE.cafeName, CAFE.cafeAddress, CAFE.businessHours, CAFE.cafePhoneNum, CAFE.cafeLink, ifnull(universeCount, 0) universeCount, ifnull(isUniversed, false) as isUniversed
-      // FROM CAFE left JOIN (
-      //   SELECT UNIVERSE.cafeId, count(UNIVERSE.cafeId) universeCount, true as isUniversed
-      //   FROM UNIVERSE 
-      //   WHERE userId = ${userId}
-      // ) as cu ON CAFE.id = cu.cafeId
-      // where CAFE.id = ${cafeId};`)
-      // const result = await sequelize.query(`
-      // SELECT CAFE.id, CAFE.cafeName, CAFE.cafeAddress, CAFE.businessHours, CAFE.cafePhoneNum, CAFE.cafeLink, ifnull(universeCount, 0) universeCount, ifnull(isUniversed, false) as isUniversed
-      // FROM CAFE
-      // LEFT JOIN (
-      //   SELECT UNIVERSE.cafeId , if ( UNIVERSE.userid = ${userId}, true, false) as isUniversed, UNIVERSE.userId, count(UNIVERSE.cafeId) universeCount
-      //   FROM UNIVERSE 
-      // group by UNIVERSE.cafeId
-      // ) as cu ON CAFE.id = cu.cafeId
-      // where CAFE.id = ${cafeId};`)
       const result = await sequelize.query(`
       SELECT CAFE.id, CAFE.cafeName, CAFE.cafeAddress, CAFE.businessHours, CAFE.cafePhoneNum, CAFE.cafeLink, ifnull(universeCount, 0) universeCount, ifnull(isUniversed, false) as isUniversed
       FROM CAFE 
@@ -139,5 +122,4 @@ module.exports = {
       throw error;
     }
   },
- 
 } 

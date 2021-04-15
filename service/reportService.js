@@ -139,9 +139,22 @@ module.exports = {
       const progressStatus = 2;
       const now = new Date();
       const result = addManage.create({
-        // created_at: Sequelize.NOW,
         userId,
         cafeId,
+        confirmStatus: progressStatus,
+        created_at: now.toUTCString()
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  registerAddMenu: async (userId) => {
+    try {
+      const progressStatus = 2;
+      const now = new Date();
+      const result = addManage.create({
+        userId,
         confirmStatus: progressStatus,
         created_at: now.toUTCString()
       });
