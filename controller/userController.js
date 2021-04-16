@@ -3,44 +3,40 @@ const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const { user } = require('../models/index');
 const jwt = require('../modules/jwt');
-const sequelize = require('sequelize');
+const { sequelize } = require('../models');
 
 module.exports = {
   signup: async (req, res) => {
     const { uuid, nickName } = req.body;
 
-    try {
-      const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
-      
-      const searchUuid = searchUuidResult[0];
-      
-      if (searchUuid.uuid) {
-        res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, searchUuid));
-        return;
-      }
-      
-      if (!nickName) {
-        res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
-        return;
-      }
-      
-      const userResult = await user.create({
-        uuid: uuid,
-        nickName: nickName,
-        isAdmin: false
-      });
-      
-      const { id } = userResult;
-      
-      const { accessToken, refreshToken } = await jwt.sign(id);
-      
-      res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.SIGNUP_SUCCESS, {
-        accessToken: accessToken,
-        refreshToken: refreshToken
-      }))
-    } catch (err) {
-      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
+
+    const searchUuid = searchUuidResult[0];
+
+    if (searchUuid) {
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS));
+      return;
     }
+
+    if (!nickName) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+      return;
+    }
+
+    const userResult = await user.create({
+      uuid: uuid,
+      nickName: nickName,
+      isAdmin: false
+    });
+
+    const { id } = userResult;
+
+    const { accessToken, refreshToken } = await jwt.sign(id);
+    
+    res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.SIGNUP_SUCCESS, {
+      accessToken: accessToken,
+      refreshToken: refreshToken
+    }))
   },
   nickNameChange: async (req, res) => {
     const { newNickName } = req.body;
