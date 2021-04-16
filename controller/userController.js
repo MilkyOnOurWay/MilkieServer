@@ -9,7 +9,7 @@ module.exports = {
   signup: async (req, res) => {
     const { uuid, nickName } = req.body;
 
-    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%;'`);
+    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
 
     const searchUuid = searchUuidResult[0];
 
