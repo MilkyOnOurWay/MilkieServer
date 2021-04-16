@@ -13,8 +13,8 @@ module.exports = {
 
     const searchUuid = searchUuidResult[0];
 
-    if (searchUuid.uuid) {
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, searchUuid));
+    if (searchUuid) {
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS));
       return;
     }
 
