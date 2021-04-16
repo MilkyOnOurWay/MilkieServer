@@ -9,7 +9,8 @@ module.exports = {
   signup: async (req, res) => {
     const { uuid, nickName } = req.body;
 
-    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
+    try {
+      const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
 
     const searchUuid = searchUuidResult[0];
 
@@ -37,6 +38,9 @@ module.exports = {
       accessToken: accessToken,
       refreshToken: refreshToken
     }))
+    } catch (err) {
+      res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
+    }
   },
   nickNameChange: async (req, res) => {
     const { newNickName } = req.body;
