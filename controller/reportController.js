@@ -2,6 +2,7 @@ const util = require('../modules/util');
 const responseMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const { cafeService, reportService } = require('../service');
+const { sequelize } = require('../models');
 
 module.exports = {
   deleteCafe: async (req, res) => {
