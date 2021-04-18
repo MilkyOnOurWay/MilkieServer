@@ -149,20 +149,6 @@ module.exports = {
       throw error;
     }
   },
-  registerAddMenu: async (userId) => {
-    try {
-      const progressStatus = 2;
-      const now = new Date();
-      const result = addManage.create({
-        userId,
-        confirmStatus: progressStatus,
-        created_at: now.toUTCString()
-      });
-      return result;
-    } catch (error) {
-      throw error;
-    }
-  },
   readCanceledReports: async (userId) => {
     try {
       const cancel = 1;
