@@ -175,11 +175,6 @@ module.exports = {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
       }
 
-      // const existingMenu = await cafeService.readCafeMenu(cafeId);
-      // if (existingMenu) {
-      //   return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_REGISTERED_MENU));
-      // }
-
       /** menu 등록 */
       const registerCafeMenu = {};
       for (let i = 0; i < menu.length; i++) {
