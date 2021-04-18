@@ -172,7 +172,7 @@ module.exports = {
       }
   
       if (!cafeId) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
+        return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
       }
 
       /** menu 등록 */
