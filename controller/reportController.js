@@ -175,25 +175,17 @@ module.exports = {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
       }
 
-      // const existingMenu = await cafeService.readCafeMenu(cafeId);
-      // if (existingMenu) {
-      //   return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_REGISTERED_MENU));
-      // }
-
       /** menu 등록 */
-      const registerCafeMenu = {};
       for (let i = 0; i < menu.length; i++) {
-        const registerCafeMenuTemp = await adminService.registerCafeMenu(cafeId, menu[i].menuName, menu[i].price);
-        registerCafeMenu[registerCafeMenuTemp] = [];
+        let registerAddCafeMenu = await reportService.registerAddCafeMenu(cafeId, menu[i].menuName, menu[i].price);
         for (let j = 0; j < menu[i].category.length; j++){
-          const registerMenuCategoryTemp = await adminService.registerMenuCategory(registerCafeMenuTemp.dataValues.menuId, menu[i].category[j]);
-          registerCafeMenu[registerCafeMenuTemp].push(registerMenuCategoryTemp);
+          let registerAddMenuCategory = await reportService.registerAddMenuCategory(registerAddCafeMenu.dataValues.menuId, menu[i].category[j]);
         }
       }
-
+      
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId);
-      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_MENU_SUCCESS));
+      const result = await reportService.registerAddCafe(userId, cafeId);
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }

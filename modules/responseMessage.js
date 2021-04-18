@@ -49,6 +49,7 @@ module.exports = {
 
   // 정보 추가 요청
   REGISTER_ADD_CAFE_SUCCESS: "정보 추가 요청 성공입니다",
+  REGISTER_ADD_MENU_SUCCESS: "메뉴 추가 요청 성공입니다",
 
   // 나의 제보
   NONE_REPORT: "사용자가 제보한 카페가 없습니다",
