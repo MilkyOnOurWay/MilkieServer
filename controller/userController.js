@@ -9,22 +9,14 @@ module.exports = {
   signup: async (req, res) => {
     const { uuid, nickName } = req.body;
 
-    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
-
-    const searchUuid = searchUuidResult[0];
-
-    if (searchUuid) {
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, {
-        accessToken: accessToken,
-        refreshToken: refreshToken
-      }))
-      return;
-    }
-
     if (!nickName) {
       res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       return;
     }
+
+    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
+
+    const searchUuid = searchUuidResult[0];
 
     const userResult = await user.create({
       uuid: uuid,
@@ -35,6 +27,14 @@ module.exports = {
     const { id } = userResult;
 
     const { accessToken, refreshToken } = await jwt.sign(id);
+
+    if (searchUuid) {
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, {
+        accessToken: accessToken,
+        refreshToken: refreshToken
+      }))
+      return;
+    }
     
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.SIGNUP_SUCCESS, {
       accessToken: accessToken,
@@ -88,3 +88,4 @@ module.exports = {
     }
   }
 }
+
