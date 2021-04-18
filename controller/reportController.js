@@ -181,7 +181,7 @@ module.exports = {
       // }
 
       /** menu 등록 */
-      const registerCafeMenu = { registerCafeMenuTemp: [] };
+      const registerCafeMenu = {};
       for (let i = 0; i < menu.length; i++) {
         const registerCafeMenuTemp = await adminService.registerCafeMenu(cafeId, menu[i].menuName, menu[i].price);
         registerCafeMenu[registerCafeMenuTemp] = [];
