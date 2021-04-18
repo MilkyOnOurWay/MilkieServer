@@ -174,7 +174,7 @@ module.exports = {
 
     const searchCafe = searchCafeResult[0];
 
-    if (!searchCafeResult) {
+    if (!searchCafe) {
       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
     }
 
