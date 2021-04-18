@@ -173,9 +173,9 @@ module.exports = {
   
       const searchCafeResult = await sequelize.query(`SELECT CAFE.id FROM CAFE WHERE = '%${cafeId}%';`);
 
-      const searchCafe = searchCafeResult[0];
+      // const searchCafe = searchCafeResult[0];
 
-      if (!searchCafe) {
+      if (!searchCafeResult) {
         return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
       }
 
