@@ -171,7 +171,11 @@ module.exports = {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
       }
   
-      if (!cafeId) {
+      const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE = '%${cafeId}%';`);
+
+      const searchCafe = searchCafeResult[0];
+
+      if (!searchCafe) {
         return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
       }
 
