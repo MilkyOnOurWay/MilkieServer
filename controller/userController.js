@@ -14,7 +14,10 @@ module.exports = {
     const searchUuid = searchUuidResult[0];
 
     if (searchUuid) {
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS));
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, {
+        accessToken: accessToken,
+        refreshToken: refreshToken
+      }))
       return;
     }
 
@@ -85,3 +88,4 @@ module.exports = {
     }
   }
 }
+
