@@ -179,6 +179,8 @@ module.exports = {
       return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
     }
 
+    //이렇게 코드를 짜니 Query.formatError (/node_modules/sequelize/lib/dialects/mysql/query.js:239:16) 오류랑 UnhandledPromiseRejectionWarning: SequelizeDatabaseError: You have an error in your SQL syntax; 이 오류 두가지가 납니다..!
+
     try {
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
