@@ -171,17 +171,22 @@ module.exports = {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
     }
 
-    const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE = '%${cafeId}%';`);
+    // const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = '%${cafeId}%';`);
 
-    const searchCafe = searchCafeResult[0];
+    // const searchCafe = searchCafeResult[0];
 
-    if (!searchCafe) {
-      return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
-    }
-
-    //이렇게 코드를 짜니 Query.formatError (/node_modules/sequelize/lib/dialects/mysql/query.js:239:16) 오류랑 UnhandledPromiseRejectionWarning: SequelizeDatabaseError: You have an error in your SQL syntax; 이 오류 두가지가 납니다..!
+    // if (!searchCafe) {
+    //   return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
+    // }
 
     try {
+      /** 기존 cafe 불러오기 */
+      const existingCafe = await cafeService.readOneCafe(cafeId);
+      if (!existingCafe) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
+      }
+      const registerAddMenuId = existingCafe.dataValues.id;
+
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
         let registerAddCafeMenu = await reportService.registerAddCafeMenu(cafeId, menu[i].menuName, menu[i].price);
@@ -191,7 +196,7 @@ module.exports = {
       }
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddCafe(userId, cafeId);
+      const result = await reportService.registerAddMenu(userId, registerAddMenuId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));

@@ -149,6 +149,21 @@ module.exports = {
       throw error;
     }
   },
+  registerAddMenu: async (userId, cafeId) => {
+    try {
+      const processStatus = 2;
+      const now = new Date();
+      const result = addManage.create({
+        userId,
+        cafeId: cafeId,
+        confirmStatus: processStatus,
+        created_at: now.toUTCString()
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
   readCanceledReports: async (userId) => {
     try {
       const cancel = 1;
