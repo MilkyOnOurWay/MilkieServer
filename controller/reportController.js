@@ -180,7 +180,7 @@ module.exports = {
     }
 
     try {
-      const registerAddMenuId = searchCafeId.dataValues;
+      const registerAddMenuId = cafeId;
 
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
