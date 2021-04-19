@@ -171,21 +171,17 @@ module.exports = {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
     }
 
-    // const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = '%${cafeId}%';`);
+    const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = '%${cafeId}%';`);
 
-    // const searchCafe = searchCafeResult[0];
+    const searchCafe = searchCafeResult[0];
 
-    // if (!searchCafe) {
-    //   return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
-    // }
+    if (!searchCafe) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
+    }
 
     try {
       /** 기존 cafe 불러오기 */
-      const existingCafe = await cafeService.readOneCafe(cafeId);
-      if (!existingCafe) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
-      }
-      const registerAddMenuId = existingCafe.dataValues.id;
+      const registerAddMenuId = searchCafe.dataValues.id;
 
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
