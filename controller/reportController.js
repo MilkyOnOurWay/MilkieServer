@@ -171,7 +171,7 @@ module.exports = {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
     }
 
-    const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE = '%${cafeId}%';`);
+    const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = '%${cafeId}%';`);
 
     const searchCafe = searchCafeResult[0];
 
