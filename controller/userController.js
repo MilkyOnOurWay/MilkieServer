@@ -18,6 +18,11 @@ module.exports = {
 
     const searchUuid = searchUuidResult[0];
 
+    if (searchUuid) {
+      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS));
+      return;
+    }
+
     const userResult = await user.create({
       uuid: uuid,
       nickName: nickName,
@@ -27,14 +32,6 @@ module.exports = {
     const { id } = userResult;
 
     const { accessToken, refreshToken } = await jwt.sign(id);
-
-    if (searchUuid) {
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS, {
-        accessToken: accessToken,
-        refreshToken: refreshToken
-      }))
-      return;
-    }
     
     res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.SIGNUP_SUCCESS, {
       accessToken: accessToken,

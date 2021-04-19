@@ -2,6 +2,7 @@ const util = require('../modules/util');
 const responseMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const { cafeService, reportService } = require('../service');
+const { sequelize } = require('../models');
 
 module.exports = {
   deleteCafe: async (req, res) => {
@@ -166,14 +167,20 @@ module.exports = {
     const { cafeId } = req.params;
     const { menu } = req.body;
 
+    if (!userId || !menu) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
+    }
+
+    /** 기존 cafe 불러오기 */
+    const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = '%${cafeId}%';`);
+    const searchCafeId = searchCafeResult[0];
+
+    if (!searchCafeId) {
+      return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
+    }
+
     try {
-      if (!userId || !menu) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
-      }
-  
-      if (!cafeId) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.NOT_FOUND, responseMessage.NOT_EXISTING_CAFE));
-      }
+      const registerAddMenuId = searchCafeResult[0].dataValues;
 
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
@@ -184,7 +191,7 @@ module.exports = {
       }
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddCafe(userId, cafeId);
+      const result = await reportService.registerAddMenu(userId, registerAddMenuId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));

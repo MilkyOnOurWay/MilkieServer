@@ -149,13 +149,14 @@ module.exports = {
       throw error;
     }
   },
-  registerAddMenu: async (userId) => {
+  registerAddMenu: async (userId, cafeId) => {
     try {
-      const progressStatus = 2;
+      const processStatus = 2;
       const now = new Date();
       const result = addManage.create({
         userId,
-        confirmStatus: progressStatus,
+        cafeId: cafeId,
+        confirmStatus: processStatus,
         created_at: now.toUTCString()
       });
       return result;
