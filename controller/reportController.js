@@ -180,6 +180,8 @@ module.exports = {
     }
 
     try {
+      const registerAddMenuId = searchCafeResult[0].id;
+
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
         let registerAddCafeMenu = await reportService.registerAddCafeMenu(cafeId, menu[i].menuName, menu[i].price);
@@ -189,7 +191,7 @@ module.exports = {
       }
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId, cafeId);
+      const result = await reportService.registerAddMenu(userId, registerAddMenuId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
