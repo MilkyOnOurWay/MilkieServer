@@ -181,7 +181,7 @@ module.exports = {
 
     try {
       /** 기존 cafe 불러오기 */
-      const registerAddMenuId = searchCafe.dataValues.id;
+      const registerAddMenuId = searchCafe.id;
 
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
