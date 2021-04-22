@@ -151,7 +151,6 @@ module.exports = {
   },
   registerAddMenu: async (userId, cafeId) => {
     try {
-      console.log(cafeId);
       const processStatus = 2;
       const now = new Date();
       const result = addManage.create({
