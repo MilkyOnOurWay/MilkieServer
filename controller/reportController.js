@@ -173,7 +173,7 @@ module.exports = {
 
     /** 기존 cafe 불러오기 */
     const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = '%${cafeId}%';`);
-    // console.log(searchCafeResult);
+    console.log(searchCafeResult);
     // const searchCafeId = searchCafeResult[0];
     // console.log(searchCafeId);
 
