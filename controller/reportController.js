@@ -174,10 +174,10 @@ module.exports = {
     /** 기존 cafe 불러오기 */
     const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = ${cafeId};`);
     console.log(searchCafeResult);
-    const searchCafeId = searchCafeResult[0];
+    const searchCafeId = searchCafeResult[0].id;
     console.log(searchCafeId);
 
-    if (!searchCafeResult) {
+    if (!searchCafeId) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
     }
 
@@ -195,7 +195,7 @@ module.exports = {
       }
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId, registerAddMenuId);
+      const result = await reportService.registerAddMenu(userId, searchCafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
