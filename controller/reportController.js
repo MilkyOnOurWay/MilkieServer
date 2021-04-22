@@ -173,7 +173,9 @@ module.exports = {
 
     /** 기존 cafe 불러오기 */
     const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = '%${cafeId}%';`);
+    console.log(searchCafeResult);
     const searchCafeId = searchCafeResult[0];
+    console.log(searchCafeId);
 
     if (!searchCafeId) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
@@ -181,6 +183,8 @@ module.exports = {
 
     try {
       const registerAddMenuId = searchCafeResult[0].dataValues;
+      console.log(registerAddMenuId);
+      console.log(cafeId);
 
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
