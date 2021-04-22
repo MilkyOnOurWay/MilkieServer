@@ -151,11 +151,12 @@ module.exports = {
   },
   registerAddMenu: async (userId, cafeId) => {
     try {
+      console.log(cafeId);
       const processStatus = 2;
       const now = new Date();
       const result = addManage.create({
         userId,
-        cafeId: cafeId,
+        cafeId,
         confirmStatus: processStatus,
         created_at: now.toUTCString()
       });
