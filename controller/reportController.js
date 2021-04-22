@@ -195,7 +195,7 @@ module.exports = {
       }
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId, searchCafeResult);
+      const result = await reportService.registerAddMenu(userId, registerAddMenuId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
