@@ -178,14 +178,8 @@ module.exports = {
       if (searchCafeResult[0][0] === undefined) {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
       }
-      console.log(searchCafeResult);
-      console.log(searchCafeResult[0][0]);
-      const searchCafeId = searchCafeResult[0][0].id;
-      console.log(searchCafeId);
 
-      const registerAddMenuId = searchCafeResult[0].dataValues;
-      console.log(registerAddMenuId);
-      console.log(cafeId);
+      const searchCafeId = searchCafeResult[0][0].id;
 
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
