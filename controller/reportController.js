@@ -167,7 +167,7 @@ module.exports = {
     const { cafeId } = req.params;
     const { menu } = req.body;
 
-    if (!userId || !menu) {
+    if (!userId || !menu || !cafeId) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NULL_VALUE));
     }
 
@@ -177,7 +177,7 @@ module.exports = {
     const searchCafeId = searchCafeResult[0][0].id;
     console.log(searchCafeId);
 
-    if (!searchCafeId) {
+    if (searchCafeResult[0][0] === undefined) {
       return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
     }
 
