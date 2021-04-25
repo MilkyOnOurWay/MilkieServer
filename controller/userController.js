@@ -23,6 +23,17 @@ module.exports = {
     //   return;
     // }
 
+    const nickNameCheck = await user.findOne({
+      where: {
+        nickName: nickName
+      }
+    });
+
+    if (nickNameCheck) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
+      return;
+    }
+
     const userResult = await user.create({
       uuid: uuid,
       nickName: nickName,
