@@ -14,12 +14,23 @@ module.exports = {
       return;
     }
 
-    const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
+    // const searchUuidResult = await sequelize.query(`SELECT uuid FROM USER WHERE uuid = '%${uuid}%';`);
 
-    const searchUuid = searchUuidResult[0];
+    // const searchUuid = searchUuidResult[0];
 
-    if (searchUuid) {
-      res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS));
+    // if (searchUuid) {
+    //   res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SINGIN_SUCCESS));
+    //   return;
+    // }
+
+    const nickNameCheck = await user.findOne({
+      where: {
+        nickName: nickName
+      }
+    });
+
+    if (nickNameCheck) {
+      res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.ALREADY_NICKNAME));
       return;
     }
 
@@ -33,7 +44,7 @@ module.exports = {
 
     const { accessToken, refreshToken } = await jwt.sign(id);
     
-    res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, responseMessage.SIGNUP_SUCCESS, {
+    res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGNUP_SUCCESS, {
       accessToken: accessToken,
       refreshToken: refreshToken
     }))
@@ -85,4 +96,3 @@ module.exports = {
     }
   }
 }
-
