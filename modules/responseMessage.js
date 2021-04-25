@@ -10,7 +10,8 @@ module.exports = {
   NOT_FOUND_USER: "존재하지 않는 유저입니다.",
   SINGIN_SUCCESS: "로그인 성공입니다.",
 
-  // 닉네임 변경
+  // 닉네임
+  ALREADY_NICKNAME: "이미 존재하는 닉네임입니다.",
   NICKNAME_UPDATE_SUCCESS: "닉네임 변경 성공입니다.",
 
   // 회원 탈퇴
