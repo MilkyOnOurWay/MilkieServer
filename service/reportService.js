@@ -157,7 +157,8 @@ module.exports = {
         userId,
         cafeId: cafeId,
         confirmStatus: processStatus,
-        created_at: now.toUTCString()
+        created_at: now.toUTCString(),
+        onlyMenu: true
       });
       return result;
     } catch (error) {
