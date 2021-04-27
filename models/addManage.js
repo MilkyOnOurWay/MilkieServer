@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     confirmStatus: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    onlyMenu: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     tableName: 'ADD_MANAGE',
