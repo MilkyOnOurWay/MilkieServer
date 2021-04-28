@@ -98,11 +98,11 @@ module.exports = {
 
       const userDelete = await user.destroy({
         uuid: uuid,
-      }, {
-          where: {
-            id: userIdx
-          }
+        where: {
+          id: userIdx
+        }
         });
+      console.log(userDelete);
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_DELETE_SUCCESS));
     } catch (err) {
