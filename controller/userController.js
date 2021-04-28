@@ -82,6 +82,7 @@ module.exports = {
     return;
   },
   deleteUser: async (req, res) => {
+    const { uuid } = req.body;
     const userIdx = req.userIdx;
 
     try {
@@ -91,16 +92,18 @@ module.exports = {
         }
       });
 
-      if (!user) {
+      if (!findUser) {
         res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_USER));
         return;
       }
 
       const userDelete = await user.destroy({
-        where: {
-          id: userIdx
-        }
-      });
+        uuid: uuid,
+      }, {
+          where: {
+            id: userIdx
+          }
+        });
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_DELETE_SUCCESS));
     } catch (err) {
