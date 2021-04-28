@@ -70,6 +70,7 @@ module.exports = {
     }
 
     const userResult = await user.update({
+      uuid: uuid,
       nickName: newNickName,
     }, {
         where: {
