@@ -90,7 +90,7 @@ module.exports = {
         }
       });
 
-      if (!user) {
+      if (!findUser) {
         res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_FOUND_USER));
         return;
       }
