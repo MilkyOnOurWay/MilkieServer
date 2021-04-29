@@ -97,7 +97,6 @@ module.exports = {
       }
 
       const userDelete = await user.destroy({
-        uuid: uuid,
         where: {
           id: userIdx
         }
