@@ -50,7 +50,7 @@ module.exports = {
     }))
   },
   nickNameChange: async (req, res) => {
-    const { uuid, newNickName } = req.body;
+    const { newNickName } = req.body;
     const userIdx = req.userIdx;
     
     if (!newNickName) {
@@ -70,13 +70,11 @@ module.exports = {
     }
 
     const userResult = await user.update({
-      uuid: uuid,
       nickName: newNickName,
-    }, {
-        where: {
-          id: userIdx
-        }
-      });
+      where: {
+        id: userIdx
+      }
+    });
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
     return;
