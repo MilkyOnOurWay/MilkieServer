@@ -81,7 +81,6 @@ module.exports = {
     return;
   },
   deleteUser: async (req, res) => {
-    const { uuid } = req.body;
     const userIdx = req.userIdx;
 
     try {
@@ -101,7 +100,6 @@ module.exports = {
           id: userIdx
         }
         });
-      console.log(userDelete);
 
       res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.USER_DELETE_SUCCESS));
     } catch (err) {
