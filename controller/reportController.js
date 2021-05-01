@@ -201,6 +201,7 @@ module.exports = {
         created_at: now.toUTCString(),
         onlyMenu: true
       });
+      console.log(result);
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
