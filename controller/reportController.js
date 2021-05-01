@@ -188,9 +188,20 @@ module.exports = {
           let registerAddMenuCategory = await reportService.registerAddMenuCategory(registerAddCafeMenu.dataValues.menuId, menu[i].category[j]);
         }
       }
+      /** 메뉴는 등록이 되는데 addManage가 안된다 */
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId, searchCafeId);
+      // const result = await reportService.registerAddMenu(userId, searchCafeId); 
+      const processStatus = 2;
+      const now = new Date();
+      const result = await addManage.create({
+        userId,
+        cafeId: searchCafeId,
+        confirmStatus: processStatus,
+        created_at: now.toUTCString(),
+        onlyMenu: true
+      });
+
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
