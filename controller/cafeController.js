@@ -13,7 +13,7 @@ module.exports = {
     }
 
     try {
-      let cafeInfoTemp = await cafeService.readCafeInfo(userId,cafeId);
+      let cafeInfoTemp = await cafeService.readCafeInfo(userId, cafeId);
       if (cafeInfoTemp.length == 0) {
         return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE_INFO));
       }

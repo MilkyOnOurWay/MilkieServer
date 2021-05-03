@@ -41,6 +41,7 @@ module.exports = {
       const result = await menu.findAll({
         where: {
           cafeId: cafeId,
+          isReal: true,
         },
         attributes: { exclude: ['cafeId', 'menuId'] },
         include: [
@@ -52,7 +53,6 @@ module.exports = {
             group: ["menuId"],
           }
         ],
-        // raw: true
       });
       return result;
     } catch (error) {
