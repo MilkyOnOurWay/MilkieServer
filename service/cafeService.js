@@ -43,7 +43,7 @@ module.exports = {
           cafeId: cafeId,
           isReal: true,
         },
-        attributes: { exclude: ['cafeId', 'menuId'] },
+        attributes: { exclude: ['cafeId', 'menuId', 'isReal'] },
         include: [
           {
             model : category,
