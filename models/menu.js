@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     price: {
       type: DataTypes.STRING(10),
       allowNull: false
+    },
+    isReal: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     freezeTableName: true,
