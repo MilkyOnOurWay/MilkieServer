@@ -28,6 +28,7 @@ module.exports = {
       const result = await reportService.registerDeleteCafe(reason, userId, cafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_DELETE_REQUEST_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -54,6 +55,7 @@ module.exports = {
       const result = await reportService.registerEditCafe(reason, userId, cafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_EDIT_REQUEST_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -96,6 +98,7 @@ module.exports = {
     
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_REPORTS_SUCCESS, reports));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -126,6 +129,7 @@ module.exports = {
       const result = await cafeService.deleteCafe(cafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.DELETE_CAFE_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }, 
@@ -159,6 +163,7 @@ module.exports = {
       const result = await reportService.registerAddCafe(userId, registerAddCafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_CAFE_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -195,6 +200,7 @@ module.exports = {
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }

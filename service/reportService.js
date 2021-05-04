@@ -154,7 +154,6 @@ module.exports = {
       const processStatus = 2;
       const now = new Date();
       const result = addManage.create({
-        addManageId: addManageId + 1,
         userId,
         cafeId: cafeId,
         confirmStatus: processStatus,
