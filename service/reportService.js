@@ -154,10 +154,10 @@ module.exports = {
       const processStatus = 2;
       const now = new Date();
       const result = addManage.create({
+        created_at: now.toUTCString(),
+        confirmStatus: processStatus,
         userId,
         cafeId: cafeId,
-        confirmStatus: processStatus,
-        created_at: now.toUTCString(),
         onlyMenu: true
       });
       return result;
