@@ -156,8 +156,8 @@ module.exports = {
       const result = addManage.create({
         created_at: now.toUTCString(),
         confirmStatus: processStatus,
-        USERId: userId,
-        CAFEId: cafeId,
+        userId: userId,
+        cafeId: cafeId,
         onlyMenu: true
       });
       return result;

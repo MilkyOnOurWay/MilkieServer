@@ -1,3 +1,6 @@
+const User = require("./user");
+const Cafe = require("./cafe");
+
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('AddManage', {
     addManageId: {
@@ -12,6 +15,20 @@ module.exports = (sequelize, DataTypes) => {
     confirmStatus: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      reference: {
+        model: User,
+        key: "id",
+      },
+    },
+    cafeId: {
+      type: DataTypes.INTEGER,
+      reference: {
+        model: Cafe,
+        key: "id",
+      },
     },
     onlyMenu: {
       type: DataTypes.BOOLEAN,
