@@ -199,7 +199,8 @@ module.exports = {
       
       /** addManage에 등록 */
       const result = await reportService.registerAddMenu(userId, searchCafeId);
-      console.log(result);
+      console.log(userId);
+      console.log(searchCafeId);
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
