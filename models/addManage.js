@@ -1,5 +1,4 @@
-const User = require("./user");
-const Cafe = require("./cafe");
+const { User, Cafe } = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('AddManage', {
@@ -20,15 +19,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       reference: {
         model: User,
-        key: "id",
-      },
+        key: 'id',
+      }
     },
     cafeId: {
       type: DataTypes.INTEGER,
       reference: {
         model: Cafe,
-        key: "id",
-      },
+        key: 'id',
+      }
     },
     onlyMenu: {
       type: DataTypes.BOOLEAN,
