@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.INTEGER,
+      unique: false,
       reference: {
         model: User,
         key: 'id',
@@ -24,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     cafeId: {
       type: DataTypes.INTEGER,
+      unique: false,
       reference: {
         model: Cafe,
         key: 'id',
