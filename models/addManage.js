@@ -15,22 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      unique: false,
-      reference: {
-        model: User,
-        key: 'id',
-      }
-    },
-    cafeId: {
-      type: DataTypes.INTEGER,
-      unique: false,
-      reference: {
-        model: Cafe,
-        key: 'id',
-      }
-    },
     onlyMenu: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

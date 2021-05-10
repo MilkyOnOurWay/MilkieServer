@@ -149,7 +149,7 @@ module.exports = {
       throw error;
     }
   },
-  registerAddMenu: async (userId, searchCafeId) => {
+  registerAddMenu: async (userId, cafeId) => {
     try {
       const processStatus = 2;
       const now = new Date();
@@ -157,7 +157,7 @@ module.exports = {
         created_at: now.toUTCString(),
         confirmStatus: processStatus,
         userId,
-        cafeId: searchCafeId,
+        cafeId: cafeId,
         onlyMenu: true
       });
       return result;
