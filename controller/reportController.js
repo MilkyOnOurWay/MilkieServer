@@ -185,8 +185,6 @@ module.exports = {
           let registerAddMenuCategory = await reportService.registerAddMenuCategory(registerAddCafeMenu.dataValues.menuId, menu[i].category[j]);
         }
       }
-      /** 메뉴는 등록이 되는데 addManage가 안된다 */
-      
       /** addManage에 등록 */
       const data = await sequelize.query(`SELECT * FROM ADD_MANAGE WHERE userId = ${userId} and cafeId = ${cafeId}`);
       if (!data) {
