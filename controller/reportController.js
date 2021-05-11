@@ -179,13 +179,13 @@ module.exports = {
 
     try {
       /** 기존 cafe 불러오기 */
-      const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = ${cafeId};`);
+      // const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = ${cafeId};`);
 
-      if (searchCafeResult[0][0] === undefined) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
-      }
+      // if (searchCafeResult[0][0] === undefined) {
+      //   return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
+      // }
 
-      const searchCafeId = searchCafeResult[0][0].id;
+      // const searchCafeId = searchCafeResult[0][0].id;
 
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
@@ -197,7 +197,7 @@ module.exports = {
       /** 메뉴는 등록이 되는데 addManage가 안된다 */
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId, searchCafeId);
+      const result = await reportService.registerAddMenu(userId, cafeId);
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
