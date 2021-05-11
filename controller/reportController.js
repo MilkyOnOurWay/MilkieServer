@@ -3,6 +3,7 @@ const responseMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const { cafeService, reportService } = require('../service');
 const { sequelize } = require('../models');
+const addManage = require('../models/addManage');
 
 module.exports = {
   deleteCafe: async (req, res) => {
@@ -28,6 +29,7 @@ module.exports = {
       const result = await reportService.registerDeleteCafe(reason, userId, cafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_DELETE_REQUEST_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -54,6 +56,7 @@ module.exports = {
       const result = await reportService.registerEditCafe(reason, userId, cafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_EDIT_REQUEST_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -96,6 +99,7 @@ module.exports = {
     
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_REPORTS_SUCCESS, reports));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -126,6 +130,7 @@ module.exports = {
       const result = await cafeService.deleteCafe(cafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.DELETE_CAFE_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }, 
@@ -159,6 +164,7 @@ module.exports = {
       const result = await reportService.registerAddCafe(userId, registerAddCafeId);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_CAFE_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   },
@@ -172,15 +178,6 @@ module.exports = {
     }
 
     try {
-      /** 기존 cafe 불러오기 */
-      const searchCafeResult = await sequelize.query(`SELECT id FROM CAFE WHERE id = ${cafeId};`);
-
-      if (searchCafeResult[0][0] === undefined) {
-        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, responseMessage.NOT_EXISTING_CAFE));
-      }
-
-      const searchCafeId = searchCafeResult[0][0].id;
-
       /** menu 등록 */
       for (let i = 0; i < menu.length; i++) {
         let registerAddCafeMenu = await reportService.registerAddCafeMenu(cafeId, menu[i].menuName, menu[i].price);
@@ -188,13 +185,15 @@ module.exports = {
           let registerAddMenuCategory = await reportService.registerAddMenuCategory(registerAddCafeMenu.dataValues.menuId, menu[i].category[j]);
         }
       }
-      /** 메뉴는 등록이 되는데 addManage가 안된다 */
-      
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId, searchCafeId);
+      const data = await sequelize.query(`SELECT * FROM ADD_MANAGE WHERE userId = ${userId} and cafeId = ${cafeId}`);
+      if (!data) {
+        await reportService.registerAddMenu(userId, cafeId);
+      }
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
+      console.log(error);
       return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }

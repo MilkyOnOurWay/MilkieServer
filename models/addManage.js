@@ -1,3 +1,5 @@
+const { User, Cafe } = require('../models');
+
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define('AddManage', {
     addManageId: {
