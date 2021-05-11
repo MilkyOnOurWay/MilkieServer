@@ -3,6 +3,7 @@ const responseMessage = require('../modules/responseMessage');
 const statusCode = require('../modules/statusCode');
 const { cafeService, reportService } = require('../service');
 const { sequelize } = require('../models');
+const addManage = require('../models/addManage');
 
 module.exports = {
   deleteCafe: async (req, res) => {
@@ -194,13 +195,22 @@ module.exports = {
         }
       }
       /** 메뉴는 등록이 되는데 addManage가 안된다 */
-      console.log(userId);
-      console.log(searchCafeId);
+      const stringUser = String.userId;
+      const stringCafe = String.searchCafeId;
+      console.log(stringUser);
+      console.log(stringCafe);
       
       /** addManage에 등록 */
-      const result = await reportService.registerAddMenu(userId, searchCafeId);
-      console.log(userId);
-      console.log(searchCafeId);
+      const processStatus = 2;
+      const now = new Date();
+      // const result = await reportService.registerAddMenu(userId, searchCafeId);
+      const result = await addManage.create({
+        created_at: now.toUTCString(),
+        confirmStatus: processStatus,
+        userId: stringUser,
+        cafeId: stringCafe,
+        onlyMenu: true
+      });
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.REGISTER_ADD_MENU_SUCCESS));
     } catch (error) {
