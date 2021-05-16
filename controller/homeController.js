@@ -83,7 +83,8 @@ module.exports = {
       const findMenuResult = await menu.findAll({
         attributes: ['cafeId'],
         where: {
-          menuId : findCategory
+          menuId : findCategory,
+          isReal: true
         },
       });
 
