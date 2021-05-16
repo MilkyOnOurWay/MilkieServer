@@ -87,7 +87,7 @@ module.exports = {
       if (confirmedReports.length == 0) {
         reports['done']= []
       } else {
-        for (let i = 0; i < confirmedReports.length; i++){
+        for (let i = 0; i < confirmedReports.length; i++) {
           let tt = await cafeService.readCafeCategory(confirmedReports[i].id);
           confirmedReports[i]['category'] = [];
           for (let j = 0; j < tt[0].length; j++) {
@@ -185,9 +185,10 @@ module.exports = {
           let registerAddMenuCategory = await reportService.registerAddMenuCategory(registerAddCafeMenu.dataValues.menuId, menu[i].category[j]);
         }
       }
+      // 위에 registerAddMenuCategory 지워도 되나
       /** addManage에 등록 */
-      const data = await sequelize.query(`SELECT * FROM ADD_MANAGE WHERE userId = ${userId} and cafeId = ${cafeId}`);
-      if (!data) {
+      const existAddData = await sequelize.query(`SELECT * FROM ADD_MANAGE WHERE userId = ${userId} and cafeId = ${cafeId}`);
+      if (!existAddData) {
         await reportService.registerAddMenu(userId, cafeId);
       }
 
