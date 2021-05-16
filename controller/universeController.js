@@ -4,7 +4,7 @@ const util = require("../modules/util");
 const { user, universe, cafe, menuCategory, menu } = require('../models/index');
 const jwt = require('../modules/jwt');
 const sequelize = require('sequelize');
-const { universeService, cafeService } = require('../service');
+const { universeService } = require('../service');
 
 module.exports = {
   universeOn: async (req, res) => {
@@ -97,7 +97,7 @@ module.exports = {
       const aroundUniverseTemp = await universeService.getAroundUniverse(userIdx);
       const aroundUniverse = aroundUniverseTemp[0];
       for (let i = 0; i < aroundUniverse.length; i++) {
-        let uc = await cafeService.readCafeCategory(aroundUniverse[i].id);
+        let uc = await universeService.readUniverseCategory(aroundUniverse[i].id);
         aroundUniverse[i]['category'] = [];
         for (let j = 0; j < uc[0].length; j++) {
           aroundUniverse[i]['category'].push(uc[0][j].categoryId)

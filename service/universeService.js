@@ -42,5 +42,19 @@ module.exports = {
     } catch(error) {
       throw error;
     }
+  },
+  readUniverseCategory: async (cafeId) => {
+    try{ 
+      const result = await sequelize.query(`
+      SELECT distinct(CATEGORY.categoryId) 
+      FROM MENU 
+      LEFT OUTER JOIN ( MENU_CATEGORY INNER JOIN CATEGORY ON CATEGORY.categoryId = MENU_CATEGORY.categoryId )  ON MENU.menuId = MENU_CATEGORY.menuId 
+      WHERE MENU.cafeId = ${cafeId} and MENU.isReal = true;`,{
+        raw: true
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
   }
 } 
