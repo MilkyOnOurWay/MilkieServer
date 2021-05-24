@@ -113,10 +113,12 @@ module.exports = {
   }, 
   registerAddCafeMenu: async (cafeId, menuName, price) => {
     try {
+      const now = new Date();
       const result = menu.create({
         menuName,
         price,
-        cafeId
+        cafeId,
+        created_at: now.toUTCString()
       });
       return result;
     } catch (error) {
