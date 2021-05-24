@@ -185,7 +185,7 @@ module.exports = {
           let registerAddMenuCategory = await reportService.registerAddMenuCategory(registerAddCafeMenu.dataValues.menuId, menu[i].category[j]);
         }
       }
-      // 위에 registerAddMenuCategory 지워도 되나
+
       /** addManage에 등록 */
       const existAddData = await sequelize.query(`SELECT * FROM ADD_MANAGE WHERE userId = ${userId} and cafeId = ${cafeId}`);
       if (!existAddData) {
