@@ -113,6 +113,7 @@ module.exports = {
   }, 
   registerAddCafeMenu: async (cafeId, menuName, price) => {
     try {
+      const now = new Date();
       const result = menu.create({
         menuName,
         price,
