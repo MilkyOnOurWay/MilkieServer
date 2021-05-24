@@ -116,7 +116,8 @@ module.exports = {
       const result = menu.create({
         menuName,
         price,
-        cafeId
+        cafeId,
+        created_at: now.toUTCString()
       });
       return result;
     } catch (error) {
