@@ -13,19 +13,19 @@ module.exports = {
     const searchWord = req.params.searchWord;
 
     try {
-      const searchCafeTemp = await sequelize.query(`SELECT cafeName, cafeAddress, longitude, latitude, businessHours
+      const searchCafeTemp = await sequelize.query(`SELECT id, cafeName, cafeAddress
       from CAFE
       where cafeName like '%${searchWord}%' and isReal = true;`);
 
       const searchCafe = searchCafeTemp[0];
 
-      for (let i = 0; i < searchCafe.length; i++) {
-        if (searchCafe[i].businessHours == null) {
-          searchCafe[i].businessHours = ""
-        } else {
+      // for (let i = 0; i < searchCafe.length; i++) {
+      //   if (searchCafe[i].businessHours == null) {
+      //     searchCafe[i].businessHours = ""
+      //   } else {
           
-        }
-      }
+      //   }
+      // }
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.SEARCH_SUCCESS, searchCafe)); 
     } catch (error) {
