@@ -19,13 +19,13 @@ module.exports = {
 
       const searchCafe = searchCafeTemp[0];
 
-      for (let i = 0; i < searchCafe.length; i++) {
-        if (searchCafe[i].businessHours == null) {
-          searchCafe[i].businessHours = ""
-        } else {
+      // for (let i = 0; i < searchCafe.length; i++) {
+      //   if (searchCafe[i].businessHours == null) {
+      //     searchCafe[i].businessHours = ""
+      //   } else {
           
-        }
-      }
+      //   }
+      // }
 
       return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.SEARCH_SUCCESS, searchCafe)); 
     } catch (error) {
