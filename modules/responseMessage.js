@@ -8,7 +8,8 @@ module.exports = {
 
   // 로그인
   NOT_FOUND_USER: "존재하지 않는 유저입니다.",
-  SINGIN_SUCCESS: "로그인 성공입니다.",
+  LOGIN_SUCCESS: "로그인 성공입니다.",
+  REQUIRE_LOGIN: "로그인이 필요합니다.",
 
   // 닉네임
   ALREADY_NICKNAME: "이미 존재하는 닉네임입니다.",

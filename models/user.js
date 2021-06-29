@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(10),
       allowNull: false
     },
+    refreshToken: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

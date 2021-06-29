@@ -1,9 +1,8 @@
 const statusCode = require("../modules/statusCode");
 const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
-const { user } = require('../models/index');
 const jwt = require('../modules/jwt');
-const { sequelize } = require('../models');
+const { user } = require('../models/index');
 
 module.exports = {
   signup: async (req, res) => {

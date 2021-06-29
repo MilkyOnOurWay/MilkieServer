@@ -13,5 +13,6 @@ router.use('/cafe', require('./cafe'));
 router.use('/home', require('./home'));
 router.use('/search', require('./search'));
 router.use('/admin', require('./admin'));
+router.use('/social', require('./social'));
 
 module.exports = router;

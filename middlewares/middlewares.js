@@ -10,33 +10,34 @@ module.exports = {
   userJwt: async (req, res, next) => {
     const token = req.headers.token;
 
-    if (!token) {
-      return res
-        .status(statusCode.BAD_REQUEST)
-        .send(util.fail(statusCode.BAD_REQUEST, responseMessage.EMPTY_TOKEN));
+    if (token === undefined) {
+      console.log("로그인하지 않은 사용자입니다.");
+      next();
+    } else {
+      if (!token) {
+        return res
+          .status(statusCode.BAD_REQUEST)
+          .send(util.fail(statusCode.BAD_REQUEST, responseMessage.EMPTY_TOKEN));
+      }
+      const user = await jwt.verify(token);
+      if (user === TOKEN_EXPIRED) {
+        return res
+          .status(statusCode.UNAUTHORIZED)
+          .send(util.fail(statusCode.UNAUTHORIZED, responseMessage.EXPIRED_TOKEN));
+      }
+      if (user === TOKEN_INVALID) {
+        return res
+          .status(statusCode.UNAUTHORIZED)
+          .send(util.fail(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
+      }
+      if (user.userIdx === undefined) {
+        return res
+          .status(statusCode.UNAUTHORIZED)
+          .send(util.fail(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
+      }
+      req.decoded = user;
+      next();
     }
-
-    const users = await jwt.verify(token);
-    if (users === TOKEN_EXPIRED) {
-      return res
-        .status(statusCode.UNAUTHORIZED)
-        .send(util.fail(statusCode.UNAUTHORIZED, responseMessage.EXPIRED_TOKEN));
-    }
-
-    if (users === TOKEN_INVALID) {
-      return res
-        .status(statusCode.UNAUTHORIZED)
-        .send(util.fail(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
-    }
-
-    if (users.userIdx === undefined) {
-      return res
-        .status(statusCode.UNAUTHORIZED)
-        .send(util.fail(statusCode.UNAUTHORIZED, responseMessage.INVALID_TOKEN));
-    }
-
-    req.userIdx = users.userIdx;
-    next();
   },
 
   // refreshToken 검증
