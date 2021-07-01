@@ -3,6 +3,7 @@ const responseMessage = require("../modules/responseMessage");
 const util = require("../modules/util");
 const jwt = require('../modules/jwt');
 const { user } = require('../models/index');
+const { socialService } = require('../service');
 
 module.exports = {
   signup: async (req, res) => {
@@ -79,6 +80,38 @@ module.exports = {
 
     res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.NICKNAME_UPDATE_SUCCESS));
     return;
+  },
+  kakaoLogin: async (req, res) => {
+    const { email, nickName, autoLogin } = req.body;
+    const checkEmailResult = await socialService.checkUserEmail(email);
+    if (checkEmailResult.length == 1) {
+      console.log('로그인 되었습니다.');
+      const userResult = await socialService.getUserIdxByEmail(email);
+      req.session.userIdx = userResult[0].userIdx;
+      if (autoLogin == "true") {
+        req.session.cookie.originalMaxAge = 365*24*60*60*1000;
+      } else {
+        req.session.cookie.expires = false;
+      }
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS, {
+        userId: userResult[0].userIdx,
+        nickName: userResult[0].nickName
+      }));
+    } else {
+      console.log('회원가입 후 로그인되었습니다.');
+      const userIdx = await user.create(nickName, '', '', email);
+      const userResult = await socialService.getUserIdxByEmail(email);
+      req.session.userIdx = userIdx;
+      if (autoLogin == "true") {
+        req.session.cookie.originalMaxAge = 365*24*60*60*1000;
+      } else {
+        req.session.cookie.expires = false;
+      }
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGNUP_AND_LOGIN, {
+        userId: userResult[0].userIdx,
+        nickName: userResult[0].nickName
+      }));
+    }
   },
   deleteUser: async (req, res) => {
     const userIdx = req.userIdx;

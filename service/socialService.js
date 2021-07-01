@@ -2,14 +2,14 @@ const { user } = require('../models');
 
 module.exports = {
   //소셜 회원가입
-  socialsignup: async (nickName, id, provider) => {
-    // const fields = 'nickName, id, provider';
+  socialsignup: async (nickName, id, offer) => {
+    // const fields = 'nickName, id, offer';
     // let query = `INSERT INTO milkyway.${USER} (${fields}) VALUES ("${nickName}", "${id}", "${provider}")`;
     try {
       const result = await user.create({
         id: id,
         nickName: nickName,
-        provider: provider
+        offer: offer
       });
       return result;
     } catch (error) {
@@ -37,6 +37,32 @@ module.exports = {
           id: userIdx
         },
         attributes: ['refreshToken']
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
+  //존재하는 email인지 확인
+  checkUserEmail: async (email) => {
+    try {
+      const result = await user.findOne({
+        attributes: ['email']
+      });
+      return result;
+    } catch (error) {
+      if (error.errno == 1062) {
+        console.log('checkUser error : ', error.errno, error.code);
+        throw error;
+      }
+      throw error;
+    }
+  },
+  //이메일로 유저 정보 가져오기
+  getUserIdxByEmail: async (email) => {
+    try {
+      const result = await user.findOne({
+        attributes: ['email']
       });
       return result;
     } catch (error) {

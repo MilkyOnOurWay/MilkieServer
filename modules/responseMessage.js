@@ -5,6 +5,7 @@ module.exports = {
 
   // 회원가입
   SIGNUP_SUCCESS: "회원가입 성공입니다.",
+  SIGNUP_AND_LOGIN: "회원가입 후 로그인 성공입니다.",
 
   // 로그인
   NOT_FOUND_USER: "존재하지 않는 유저입니다.",
