@@ -72,10 +72,10 @@ module.exports = {
         cafes.push(cafe);
       }
 
-      return res.status(statusCode.OK).send(util.success(statusCode.OK,responseMessage.READ_CAFE_INFO_SUCCESS,cafes));     
+      return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.READ_CAFE_INFO_SUCCESS, cafes));     
     } catch (error) {
       console.error(error);
-      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR,responseMessage.INTERNAL_SERVER_ERROR));
+      return res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, responseMessage.INTERNAL_SERVER_ERROR));
     }
   }
 }
