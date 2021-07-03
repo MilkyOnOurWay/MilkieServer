@@ -99,7 +99,7 @@ module.exports = {
       }));
     } else {
       console.log('회원가입 후 로그인되었습니다.');
-      const userIdx = await user.create(nickName, '', '', email);
+      const userIdx = await user.create(nickName, '', '', '');
       const userResult = await socialService.getUserIdxByEmail(email);
       req.session.userIdx = userIdx;
       if (autoLogin == "true") {

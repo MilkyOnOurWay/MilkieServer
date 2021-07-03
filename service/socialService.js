@@ -2,12 +2,12 @@ const { user } = require('../models');
 
 module.exports = {
   //소셜 회원가입
-  socialsignup: async (nickName, id, offer) => {
+  socialsignup: async (nickName, uuid, offer) => {
     // const fields = 'nickName, id, offer';
     // let query = `INSERT INTO milkyway.${USER} (${fields}) VALUES ("${nickName}", "${id}", "${provider}")`;
     try {
       const result = await user.create({
-        id: id,
+        uuid: uuid,
         nickName: nickName,
         offer: offer
       });
@@ -17,11 +17,11 @@ module.exports = {
     }
   },
   //소셜 로그인
-  getUserIdxById: async (id) => {
+  getUserIdxById: async (uuid) => {
     try {
       const result = await user.findOne({
         where: {
-          id: id
+          uuid: uuid
         }
       })
       return result;

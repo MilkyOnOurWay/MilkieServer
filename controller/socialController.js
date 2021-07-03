@@ -8,9 +8,9 @@ const { socialService } = require('../service');
 module.exports = {
   socialLogin: async (req, res) => {
     try {
-      const { snsId, offer } = req.body;
+      const { uuid, offer } = req.body;
       console.log('로그인 되었습니다.');
-      const user = await socialService.getUserIdxById(snsId);
+      const user = await socialService.getUserIdxById(uuid);
       const { token } = await jwt.sign(user[0]);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.LOGIN_SUCCESS, {
         accessToken: token,
@@ -21,9 +21,9 @@ module.exports = {
   },
   socialSignup: async (req, res, next) => {
     try {
-      const { nickName, snsId, offer } = req.body;
+      const { nickName, uuid, offer } = req.body;
       console.log('회원가입 완료');
-      const userIdx = await socialService.socialsignup(nickName, snsId, offer);
+      const userIdx = await socialService.socialsignup(nickName, uuid, offer);
       return res.status(statusCode.OK).send(util.success(statusCode.OK, responseMessage.SIGNUP_SUCCESS));
     } catch (error) {
       next(error);
