@@ -17,7 +17,7 @@ module.exports = {
   readCafeInfo: async (userId, cafeId) => {
     try {
       const result = await sequelize.query(`
-      SELECT CAFE.id, CAFE.cafeName, CAFE.cafeAddress, CAFE.businessHours, CAFE.cafePhoneNum, CAFE.cafeLink, CAFE.longitude, CAFE.latitude, ifnull(universeCount, 0) universeCount, ifnull(isUniversed, false) as isUniversed
+      SELECT CAFE.id, CAFE.cafeName, CAFE.cafeAddress, CAFE.businessHours, CAFE.cafePhoneNum, CAFE.cafeLink, CAFE.longitude, CAFE.latitude, CAFE.created_at, ifnull(universeCount, 0) universeCount, ifnull(isUniversed, false) as isUniversed
       FROM CAFE 
       left outer JOIN (
         SELECT UNIVERSE.cafeId , if ( UNIVERSE.userid = ${userId}, true, null) as isUniversed, userId
@@ -43,7 +43,7 @@ module.exports = {
           cafeId: cafeId,
           isReal: true,
         },
-        attributes: { exclude: ['cafeId', 'menuId', 'isReal'] },
+        attributes: { exclude: ['cafeId', 'menuId', 'isReal', 'created_at'] },
         include: [
           {
             model : category,
